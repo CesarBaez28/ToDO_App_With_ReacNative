@@ -3,13 +3,14 @@ import { Platform } from "react-native"
 const theme = {
   colors: {
     textPrimary: '#24292e',
-    textsecundary: '#586069',
+    textsecundary: '#EEE',
     primary: '#0366D6',
     white: '#FEFEFE'
   },
   fontSizes: {
     body: 14,
-    subheading: 16
+    subheading: 16,
+    heading: 40
   },
   fonts: {
     main: Platform.select({
@@ -23,18 +24,19 @@ const theme = {
     bold: '700' 
   },
   textInput: {
-    borderRadius: 5,
+    borderRadius: 30,
     borderWidth: 1,
     borderColor: "#999",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
     marginBottom: 10
   },
   textInputError: {
     borderColor: 'red'
   },
   form: {
-    margin: 12
+    marginTop: 140,
+    marginHorizontal: 40
   },
   inputValueError: {
     color: 'red',

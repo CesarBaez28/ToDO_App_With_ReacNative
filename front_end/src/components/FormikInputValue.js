@@ -1,4 +1,5 @@
 import StyledText from "./StyledText";
+import StyleTextInput from "./StyledTextInput";
 import { useField } from "formik";
 import { StyleSheet } from "react-native";
 import theme from "../theme";

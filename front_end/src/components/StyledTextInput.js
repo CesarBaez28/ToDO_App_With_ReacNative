@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     borderColor: theme.textInput.borderColor,
     paddingHorizontal: theme.textInput.paddingHorizontal,
     paddingVertical: theme.textInput.paddingVertical,
-    marginBottom: theme.textInput.marginBottom
+    marginBottom: theme.textInput.marginBottom,
+    backgroundColor: theme.colors.white
   },
   error: {
     borderColor: theme.textInputError.borderColor

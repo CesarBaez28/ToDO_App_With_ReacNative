@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { getTasks } from '../api';
 import { useEffect } from 'react';
+import LoginScreen from '../screens/Login';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Main = () => {
 
@@ -14,18 +16,14 @@ const Main = () => {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+      <LoginScreen />
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EEE',
   },
 });
 

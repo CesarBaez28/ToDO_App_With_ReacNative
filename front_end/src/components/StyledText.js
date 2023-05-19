@@ -9,6 +9,9 @@ const styles = StyleSheet.create ({
     fontWeight: theme.fontWeights.normal,
     color: theme.colors.textPrimary
   },
+  colorWhite: {
+    color: theme.colors.white
+  },
   colorPrimary: {
     color: theme.colors.primary
   },
@@ -21,6 +24,9 @@ const styles = StyleSheet.create ({
   subheading: {
     fontSize: theme.fontSizes.subheading
   },
+  heading: {
+    fontSize: theme.fontSizes.heading
+  },
   textAlingCenter: {
     textAlign: 'center'
   },
@@ -32,7 +38,9 @@ export default function StyledText({aling, children, color, fontSize, fontWeight
     aling == 'center' && styles.textAlingCenter,
     color == 'primary' && styles.colorPrimary,
     color == 'secondary' && styles.colorSecondary,
-    fontSize == 'susubheadingb' && styles.subheading,
+    color == 'white' && styles.colorWhite,
+    fontSize == 'subheading' && styles.subheading,
+    fontSize == 'heading' && styles.heading,
     fontWeight == 'bold' && styles.bold,
     style
   ]
