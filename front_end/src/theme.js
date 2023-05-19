@@ -51,6 +51,12 @@ const theme = {
     paddingVertical: 15,
     marginHorizontal: 60,
     backgroundColor: "#2193b0"
+  },
+  gradientColors: {
+    colors: {
+      firstColor: '#2193b0',
+      secondColor: '#6dd5ed'
+    }
   }
 }
 

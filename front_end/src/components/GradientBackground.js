@@ -5,10 +5,10 @@ import theme from "../theme";
 
 const styles = StyleSheet.create({
   firstColor: {
-    color: '#2193b0'
+    color: theme.gradientColors.colors.firstColor
   },
   secondColor: {
-    color: '#6dd5ed'
+    color: theme.gradientColors.colors.secondColor
   },
   container: {
     flex: 1
