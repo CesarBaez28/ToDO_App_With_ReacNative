@@ -1,12 +1,13 @@
 import react from "react";
-import { Formik, useField } from "formik";
-import {View, StyleSheet, TouchableOpacity } from "react-native";
+import { Formik } from "formik";
+import {View, StyleSheet } from "react-native";
 import StyledText from "../components/StyledText";
 import FormikInputValue from "../components/FormikInputValue";
 import ButtonPrimary from "../components/ButtonPrimary";
 import { loginValidationSchema } from "../ValidationsSchemas/login"
 import theme from "../theme";
 import { LinearGradient } from 'expo-linear-gradient';
+import GradiantBackground from "../components/GradientBackground";
 
 const initialValues = {
   email: "",
@@ -27,14 +28,8 @@ const styles = StyleSheet.create({
 })
 
 export default function LoginScreen() {
-
   return <>
-    <LinearGradient
-      colors={['#2193b0', '#6dd5ed']}
-      style={styles.container}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-    >
+    <GradiantBackground>
       <Formik validationSchema={loginValidationSchema} initialValues={initialValues}
         onSubmit={values => console.log(values)}>
 
@@ -68,7 +63,7 @@ export default function LoginScreen() {
               </View>
 
               <View style={{marginTop: 40}}>
-                <ButtonPrimary aling='center'>
+                <ButtonPrimary aling='center' margin='horizontal'>
                   <StyledText color={'white'}>Log in</StyledText>
                 </ButtonPrimary>
               </View>
@@ -84,6 +79,6 @@ export default function LoginScreen() {
         }}
       </Formik>
 
-    </LinearGradient>
+    </GradiantBackground>
   </>
 }
