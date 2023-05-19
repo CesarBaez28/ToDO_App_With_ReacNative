@@ -56,14 +56,12 @@ export default function LoginScreen() {
                 secureTextEntry
               />
 
-              <View>
-                <StyledText aling='center' color='secondary'>
-                  Forgot your password?
-                </StyledText>
-              </View>
+              <StyledText aling='center' color='secondary'>
+                Forgot your password?
+              </StyledText>
 
               <View style={{marginTop: 40}}>
-                <ButtonPrimary aling='center' margin='horizontal'>
+                <ButtonPrimary onPress={handleSubmit} aling='center' margin='horizontal'>
                   <StyledText color={'white'}>Log in</StyledText>
                 </ButtonPrimary>
               </View>

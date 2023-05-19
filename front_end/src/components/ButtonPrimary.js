@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const ButtonPrimary = ({aling, children, margin, style, ...props}) => {
+const ButtonPrimary = ({aling, children, margin, style, onPress, ...props}) => {
   const buttonStyle = [
     styles.button,
     aling == 'center' && styles.alingCenter,
@@ -26,7 +26,7 @@ const ButtonPrimary = ({aling, children, margin, style, ...props}) => {
   ]
 
   return (
-    <TouchableOpacity style={buttonStyle} {...props}>
+    <TouchableOpacity style={buttonStyle} {...props} onPress={onPress}>
       {children}
     </TouchableOpacity>
   )
