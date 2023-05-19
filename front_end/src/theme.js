@@ -21,7 +21,7 @@ const theme = {
   },
   fontWeights: {
     normal: '400',
-    bold: '700' 
+    bold: '700'
   },
   textInput: {
     borderRadius: 30,
@@ -43,6 +43,14 @@ const theme = {
     fontSize: 12,
     marginBottom: 20,
     marginTop: -5
+  },
+  buttonPrimary: {
+    elevation: 8,
+    alignItems: 'center',
+    borderRadius: 30,
+    paddingVertical: 15,
+    marginHorizontal: 60,
+    backgroundColor: "#2193b0"
   }
 }
 

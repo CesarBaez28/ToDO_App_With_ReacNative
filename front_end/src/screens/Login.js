@@ -3,6 +3,7 @@ import { Formik, useField } from "formik";
 import {View, StyleSheet, TouchableOpacity } from "react-native";
 import StyledText from "../components/StyledText";
 import FormikInputValue from "../components/FormikInputValue";
+import ButtonPrimary from "../components/ButtonPrimary";
 import { loginValidationSchema } from "../ValidationsSchemas/login"
 import theme from "../theme";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -67,19 +68,9 @@ export default function LoginScreen() {
               </View>
 
               <View style={{marginTop: 40}}>
-                <TouchableOpacity
-                  onPress={handleSubmit}
-                  style={{
-                    elevation: 8,
-                    alignItems: 'center',
-                    borderRadius: 30,
-                    paddingVertical: 15,
-                    marginHorizontal: 60,
-                    backgroundColor: "#2193b0"
-                  }} 
-                >
+                <ButtonPrimary aling='center'>
                   <StyledText color={'white'}>Log in</StyledText>
-                </TouchableOpacity>
+                </ButtonPrimary>
               </View>
 
               <View style={{marginTop: 20}}>
