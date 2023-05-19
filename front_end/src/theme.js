@@ -32,6 +32,15 @@ const theme = {
   },
   textInputError: {
     borderColor: 'red'
+  },
+  form: {
+    margin: 12
+  },
+  inputValueError: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 20,
+    marginTop: -5
   }
 }
 
