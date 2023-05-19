@@ -21,6 +21,17 @@ const theme = {
   fontWeights: {
     normal: '400',
     bold: '700' 
+  },
+  textInput: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#999",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginBottom: 10
+  },
+  textInputError: {
+    borderColor: 'red'
   }
 }
 
