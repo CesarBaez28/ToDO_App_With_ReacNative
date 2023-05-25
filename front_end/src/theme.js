@@ -57,6 +57,14 @@ const theme = {
       firstColor: '#2193b0',
       secondColor: '#6dd5ed'
     }
+  },
+  profile: {
+    marginLeft: 12,
+    width: 36,
+    height: 36,
+    flexDirection: "column",
+    justifyContent: 'center',
+    borderRadius: '50%'
   }
 }
 

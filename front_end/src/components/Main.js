@@ -1,6 +1,7 @@
 import { getTasks } from '../api';
 import { useEffect } from 'react';
 import LoginScreen from '../screens/Login';
+import TodoList from '../screens/TodoList';
 
 const Main = () => {
 
@@ -14,7 +15,7 @@ const Main = () => {
   }, [])
 
   return (
-    <LoginScreen />
+    <TodoList />
   )
 }
 
