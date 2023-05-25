@@ -27,6 +27,9 @@ const styles = StyleSheet.create ({
   heading: {
     fontSize: theme.fontSizes.heading
   },
+  heading2: {
+    fontSize: theme.fontSizes.heading2
+  },
   textAlingCenter: {
     textAlign: 'center'
   },
@@ -41,6 +44,7 @@ export default function StyledText({aling, children, color, fontSize, fontWeight
     color == 'white' && styles.colorWhite,
     fontSize == 'subheading' && styles.subheading,
     fontSize == 'heading' && styles.heading,
+    fontSize == 'heading2' && styles.heading2,
     fontWeight == 'bold' && styles.bold,
     style
   ]
