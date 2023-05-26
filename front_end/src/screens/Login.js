@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}) {
   return <>
     <GradiantBackground>
       <Formik validationSchema={loginValidationSchema} initialValues={initialValues}
-        onSubmit={values => console.log(values)}>
+        onSubmit={values => navigation.navigate('TodoList')}>
 
         {({ handleSubmit }) => {
           return (
