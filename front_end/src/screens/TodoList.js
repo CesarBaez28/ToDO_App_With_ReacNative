@@ -1,13 +1,13 @@
-import { View, StyleSheet, TouchableOpacity, Animated, Text } from "react-native";
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, KeyboardAvoidingView, Platform } from "react-native";
 import StyledText from "../components/StyledText";
+import InputAddTask from "../components/InputAddTask";
 import GradiantBackground from "../components/GradientBackground";
-import Constants from 'expo-constants';
 import Heading from "../components/Heading";
-import Tasks from "../components/TaskS";
+import Tasks from "../components/Tasks";
+
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
     flex: 1
   },
   title: {
@@ -15,35 +15,20 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginLeft: 10
   },
+  input: {
+    borderRadius: 8,
+    marginHorizontal: 10,
+    backgroundColor: "#2193B0",
+    borderColor: "#2193B0",
+    color: 'white',
+    opacity: 0.7
+  }
 })
 
-const tareas = [
-  {
-    id: 1,
-    title: "Hacer ejercicio"
-  },
-  {
-    id: 2,
-    title: "Ir de compras"
-  },
-  {
-    id: 3,
-    title: "Coordinar proyecto"
-  }
-]
-
 export default function TodoList() {
-
-  const [listData, setListData] = useState(
-    tareas.map((items, index) => ({
-      key: `${items.id}`,
-      title: items.title
-    }))
-  )
-
   return (
     <GradiantBackground>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
 
         <Heading />
 
@@ -55,29 +40,10 @@ export default function TodoList() {
         >Lista de tareas</StyledText>
 
         <Tasks />
- 
-      </View>
+
+        <InputAddTask />
+
+      </SafeAreaView>
     </GradiantBackground>
   )
 }
-
-
-/*
-        <View style = {styles.containerTask}>
-          <TouchableOpacity style={styles.task}>
-
-            <TouchableOpacity style={styles.circle}>
-            </TouchableOpacity>
-
-            <View style ={styles.text}>
-              <StyledText>Comprar comida </StyledText>
-            </View>
-
-            <TouchableOpacity style={styles.iconRigth}>
-              <Entypo name="share-alternative" size={18} color="black" />
-            </TouchableOpacity>
-
-          </TouchableOpacity>
-        </View>
-
-*/

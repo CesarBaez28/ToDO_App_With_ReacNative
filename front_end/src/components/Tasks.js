@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view'
+import StyledText from "./StyledText";
 import theme from "../theme";
 
 const styles = StyleSheet.create({
@@ -59,7 +60,43 @@ const tareas = [
   {
     id: 3,
     title: "Coordinar proyecto"
-  }
+  },
+  {
+    id: 4,
+    title: "Hacer ejercicio"
+  },
+  {
+    id: 5,
+    title: "Ir de compras"
+  },
+  {
+    id: 6,
+    title: "Coordinar proyecto"
+  },
+  {
+    id: 7,
+    title: "Hacer ejercicio"
+  },
+  {
+    id: 8,
+    title: "Ir de compras"
+  },
+  {
+    id: 9,
+    title: "Coordinar proyecto"
+  },
+  {
+    id: 10,
+    title: "Hacer ejercicio"
+  },
+  {
+    id: 11,
+    title: "Ir de compras"
+  },
+  {
+    id: 12,
+    title: "Coordinar proyecto"
+  },
 ]
 
 export default function Tasks() {

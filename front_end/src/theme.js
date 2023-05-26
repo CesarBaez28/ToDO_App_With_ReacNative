@@ -35,6 +35,14 @@ const theme = {
   textInputError: {
     borderColor: 'red'
   },
+  inputAddTask: {
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    marginBottom: 10,
+    backgroundColor: "#2193B0",
+    color: 'white',
+  },
   form: {
     marginTop: 140,
     marginHorizontal: 40
