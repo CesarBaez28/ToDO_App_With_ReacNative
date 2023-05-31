@@ -1,9 +1,10 @@
-import React from "react"
-import {Text, StyleSheet } from 'react-native'
+import React from "react";
+import { Link } from '@react-navigation/native';
+import { StyleSheet } from "react-native";
 import theme from '../theme.js'
 
-const styles = StyleSheet.create ({
-  text: {
+const styles = StyleSheet.create({
+  link: {
     fontSize: theme.fontSizes.body,
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
@@ -15,11 +16,8 @@ const styles = StyleSheet.create ({
   colorPrimary: {
     color: theme.colors.primary
   },
-  colorSecondary: {
-    color: theme.colors.textsecundary
-  },
-  colorGray: {
-    color: theme.colors.gray
+  colorBlue: {
+    color: theme.colors.blue
   },
   bold: {
     fontWeight: theme.fontWeights.bold
@@ -27,36 +25,34 @@ const styles = StyleSheet.create ({
   subheading: {
     fontSize: theme.fontSizes.subheading
   },
-  heading: {
-    fontSize: theme.fontSizes.heading
-  },
-  heading2: {
-    fontSize: theme.fontSizes.heading2
-  },
   textAlingCenter: {
     textAlign: 'center'
   },
+  decorationLine: {
+    textDecorationLine: 'underline'
+  },
+  marginRight: {
+    marginRight: 10
+  }
 })
 
-export default function StyledText({aling, children, color, fontSize, fontWeight, style, ...restOfProps}){
-  const textStyles = [
-    styles.text,
+export default function StyledLink ({aling, to, children, color, margin, fontSize, fontWeight, decorationLine, style, ...restOfProps}){
+  const linkStyles = [
+    styles.link,
     aling == 'center' && styles.textAlingCenter,
     color == 'primary' && styles.colorPrimary,
     color == 'secondary' && styles.colorSecondary,
-    color == 'gray' && styles.colorGray,
     color == 'white' && styles.colorWhite,
+    color == 'blue' && styles.colorBlue,
     fontSize == 'subheading' && styles.subheading,
-    fontSize == 'heading' && styles.heading,
-    fontSize == 'heading2' && styles.heading2,
     fontWeight == 'bold' && styles.bold,
-    style
+    decorationLine == 'underline' && styles.decorationLine,
+    margin == 'right' && styles.marginRight
   ]
 
   return (
-    <Text style = {textStyles} {...restOfProps}>
+    <Link to={to} style = {linkStyles} {...restOfProps}>
       {children}
-    </Text>
-  )
+    </Link>
+  ) 
 }
-

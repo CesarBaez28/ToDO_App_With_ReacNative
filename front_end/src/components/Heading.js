@@ -27,10 +27,13 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Heading() {
+export default function Heading({navigation}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.profile}>
+      <TouchableOpacity 
+      style={styles.profile}
+      onPress={()=> navigation.navigate('ModalPerfil')}
+      >
         <StyledText aling={'center'}>CB</StyledText>
       </TouchableOpacity>
       <StyledText fontSize={'subheading'} style={styles.text} color={'white'} fontWeight={'bold'}>César Báez</StyledText>

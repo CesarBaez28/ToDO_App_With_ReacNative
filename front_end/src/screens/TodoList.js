@@ -25,12 +25,12 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function TodoList() {
+export default function TodoList({navigation}) {
   return (
     <GradiantBackground>
       <SafeAreaView style={styles.container}>
 
-        <Heading />
+        <Heading navigation={navigation} />
 
         <StyledText
           style={styles.title}
