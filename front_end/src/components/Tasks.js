@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view'
 import StyledText from "./StyledText";
 import theme from "../theme";
+import ModalEditTask from "./ModalEditTask";
+
+import 'react-native-gesture-handler'
+import { BottomSheetModal } from '@gorhom/bottom-sheet'
 
 const styles = StyleSheet.create({
   container: {
@@ -108,13 +112,21 @@ export default function Tasks() {
     }))
   )
 
+  const bottonSheetModalRef = useRef(null)
+
+  const snapPoints = ["65%"]
+
+  function handlePresentModal() {
+    bottonSheetModalRef.current?.present()
+  }
+
   return (
     <SwipeListView
       data={listData}
       renderItem={(data, rowMap) => (
 
         <View style={styles.container}>
-          <TouchableOpacity style={styles.task}>
+          <TouchableOpacity onPress={()=> handlePresentModal()} style={styles.task}>
 
             <TouchableOpacity style={styles.circle}>
             </TouchableOpacity>
@@ -128,6 +140,16 @@ export default function Tasks() {
             </TouchableOpacity>
 
           </TouchableOpacity>
+
+          <BottomSheetModal
+             ref={bottonSheetModalRef}
+             index={0}
+             snapPoints={snapPoints}
+             backgroundStyle = {{backgroundColor: "#EEEEEE"}}
+           >
+            <ModalEditTask />
+          </BottomSheetModal>
+
         </View>
 
       )}

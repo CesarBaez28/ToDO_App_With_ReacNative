@@ -1,9 +1,10 @@
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import StyledText from "../components/StyledText";
 import InputAddTask from "../components/InputAddTask";
 import GradiantBackground from "../components/GradientBackground";
 import Heading from "../components/Heading";
 import Tasks from "../components/Tasks";
+import {BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 
 const styles = StyleSheet.create({
@@ -25,25 +26,27 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function TodoList({navigation}) {
+export default function TodoList({ navigation }) {
   return (
     <GradiantBackground>
-      <SafeAreaView style={styles.container}>
+      <BottomSheetModalProvider>
+        <SafeAreaView style={styles.container}>
 
-        <Heading navigation={navigation} />
+          <Heading navigation={navigation} />
 
-        <StyledText
-          style={styles.title}
-          fontWeight={'bold'}
-          color={'white'}
-          fontSize={'heading2'}
-        >Lista de tareas</StyledText>
+          <StyledText
+            style={styles.title}
+            fontWeight={'bold'}
+            color={'white'}
+            fontSize={'heading2'}
+          >Lista de tareas</StyledText>
 
-        <Tasks />
+          <Tasks  />
 
-        <InputAddTask />
-
-      </SafeAreaView>
+          <InputAddTask />
+          
+        </SafeAreaView>
+      </BottomSheetModalProvider>
     </GradiantBackground>
   )
 }
