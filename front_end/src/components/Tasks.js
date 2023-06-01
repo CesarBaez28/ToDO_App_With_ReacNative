@@ -1,11 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view'
 import StyledText from "./StyledText";
 import theme from "../theme";
 import ModalEditTask from "./ModalEditTask";
+import ModalShareTask from "./ModalShareTask";
 
 import 'react-native-gesture-handler'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -113,11 +114,16 @@ export default function Tasks() {
   )
 
   const bottonSheetModalRef = useRef(null)
+  const bottonSheetModalShareRef = useRef(null)
 
   const snapPoints = ["65%"]
 
   function handlePresentModal() {
     bottonSheetModalRef.current?.present()
+  }
+
+  function handlePresentShared() {
+    bottonSheetModalShareRef.current?.present();
   }
 
   return (
@@ -135,7 +141,7 @@ export default function Tasks() {
               <StyledText>{data.item.title} </StyledText>
             </View>
 
-            <TouchableOpacity style={styles.iconRigth}>
+            <TouchableOpacity onPress={()=> handlePresentShared()} style={styles.iconRigth}>
               <Entypo name="share-alternative" size={18} color="black" />
             </TouchableOpacity>
 
@@ -148,6 +154,15 @@ export default function Tasks() {
              backgroundStyle = {{backgroundColor: "#EEEEEE"}}
            >
             <ModalEditTask />
+          </BottomSheetModal>
+
+          <BottomSheetModal
+             ref={bottonSheetModalShareRef}
+             index={0}
+             snapPoints={snapPoints}
+             backgroundStyle = {{backgroundColor: "#EEEEEE"}}
+           >
+            <ModalShareTask />
           </BottomSheetModal>
 
         </View>
