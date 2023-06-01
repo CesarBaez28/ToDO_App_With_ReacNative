@@ -17,7 +17,7 @@ export default {
   },
 
   getUserByID: function (conexion, id) {
-    return conexion.query(`Select * from users wheew id = ?`, [id])
+    return conexion.query(`Select * from users WHERE id = ?`, [id])
   },
 
   getUserByEmail: function (conexion, email) {
