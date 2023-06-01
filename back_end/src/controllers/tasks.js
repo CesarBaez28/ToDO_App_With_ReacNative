@@ -1,8 +1,50 @@
-import { connection } from "../database";
+import { connection }  from "../database";
+import tasks from "../models/tasks";
 
-export const getTasks = async (req, res) => {
-  const con = await connection();
-  const [rows] = await con.execute("SELECT 1 + 1");
-  console.log(rows[0]);
-  res.json(rows);
-};
+export default {
+  getTasks: async (req, res) => {
+    const id = req.params.id
+    const [rows] = await tasks.getTasksById(connection, id);
+    res.json(rows);
+  },
+
+  getSharedTaskByID: async (req, res) => {
+    const id = req.params.id;
+    const [task] = await tasks.getSharedTaskByID(connection, id);
+    const [author] = await tasks.getUserByID(connection, task[0].id);
+    const [shared_with] = await tasks.getUserByID(connection, task[0].id);
+    res.status(200).send({ author, shared_with });
+  },
+
+  getUserById: async(req, res) => {
+    const id = req.params.id;
+    const [user] = await tasks.getUserByID(connection, id);
+    res.status(200).send(user);
+  },
+
+  toggleCompleted: async(req, res) => {
+    const { value } = req.body;
+    const id = req.params.id;
+    const [task] = await tasks.toggleCompleted(connection, value, id);
+    res.status(200).send(task);
+  },
+
+  deleteTask: async (req, res) => {
+    const id = req.params.id;
+    await tasks.deleteTask(connection, id);
+    res.send({ message: "Task deleted successfully"});
+  },
+
+  shareTask: async(req, res) => {
+    const { id_task, id_user, email } = req.body;
+    const [userToShare] = await tasks.getUserByEmail(connection, email);
+    const [sharedTodo] = await tasks.shareTask(connection, id_task, id_user, userToShare[0].id);
+    res.status(201).send(sharedTodo);
+  },
+
+  createTask: async(req, res) => {
+    const { id_task, title } = req.body;
+    const [task] = await tasks.createTask(connection, id_task, title);
+    res.status(201).send(task);
+  }
+}
