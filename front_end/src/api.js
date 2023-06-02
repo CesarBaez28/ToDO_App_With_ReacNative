@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert, Keyboard } from "react-native";
 
 const API = "https://27c4-206-85-14-13.ngrok.io/tasks";
 
@@ -56,3 +57,26 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 
   console.log(data)
 }
+
+//Share task 
+export const shareTask = async (idUser, idTask, nameTask, email) => {
+  const response = await fetch(API+"/shared_tasks", {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify({
+      id_task: idTask,
+      id_user: idUser,
+      email: email
+    })
+  })
+
+  const data = await response.json()
+  console.log(data)
+  Keyboard.dismiss()
+  Alert.alert(
+    "Felicidades",
+    `Has compartido la tarea "${nameTask}" con ${email}`
+  )
+} 

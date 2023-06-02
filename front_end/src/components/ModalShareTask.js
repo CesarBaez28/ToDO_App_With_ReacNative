@@ -6,6 +6,7 @@ import ButtonPrimary from "./ButtonPrimary";
 import { Formik } from "formik";
 import FormikInputValue from "../components/FormikInputValue";
 import { shareTaskValidationSchema } from "../ValidationsSchemas/shareTask";
+import { shareTask } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,10 +45,10 @@ const initialValue = {
   email: ""
 }
 
-export default function ModalShareTask({ }) {
+export default function ModalShareTask({idUser, idTask, nameTask}) {
   return (
     <Formik validationSchema={shareTaskValidationSchema} initialValues={initialValue}
-      onSubmit={values => console.log(values)}
+      onSubmit={values => shareTask(idUser, idTask, nameTask, values.email)}
     >
       {({handleSubmit}) => {
         return (

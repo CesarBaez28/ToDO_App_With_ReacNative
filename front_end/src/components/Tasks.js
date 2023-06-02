@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Tasks({tasks, setTasks}) {
+export default function Tasks({ tasks, setTasks }) {
 
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
@@ -77,10 +77,10 @@ export default function Tasks({tasks, setTasks}) {
       renderItem={(data, rowMap) => (
 
         <View style={styles.container}>
-          <TouchableOpacity onPress={()=> handlePresentModal()} style={styles.task}>
+          <TouchableOpacity onPress={() => handlePresentModal()} style={styles.task}>
 
-            <CheckMark 
-              id={data.item.id} 
+            <CheckMark
+              id={data.item.id}
               completed={data.item.completed}
               tasks={tasks}
               setTasks={setTasks}
@@ -90,28 +90,38 @@ export default function Tasks({tasks, setTasks}) {
               <StyledText>{data.item.name} </StyledText>
             </View>
 
-            <TouchableOpacity onPress={()=> handlePresentShared()} style={styles.iconRigth}>
-              <Entypo name="share-alternative" size={18} color="black" />
-            </TouchableOpacity>
+            {data.item.id_shared_with != null ? (
+              <TouchableOpacity onPress={() => handlePresentShared()} style={styles.iconRigth}>
+                <Feather name="users" size={22} color="black" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => handlePresentShared()} style={styles.iconRigth}>
+                <Entypo name="share-alternative" size={22} color="black" />
+              </TouchableOpacity>
+            )}
 
           </TouchableOpacity>
 
           <BottomSheetModal
-             ref={bottonSheetModalRef}
-             index={0}
-             snapPoints={snapPoints}
-             backgroundStyle = {{backgroundColor: "#EEEEEE"}}
-           >
+            ref={bottonSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+          >
             <ModalEditTask />
           </BottomSheetModal>
 
           <BottomSheetModal
-             ref={bottonSheetModalShareRef}
-             index={0}
-             snapPoints={snapPoints}
-             backgroundStyle = {{backgroundColor: "#EEEEEE"}}
-           >
-            <ModalShareTask />
+            ref={bottonSheetModalShareRef}
+            index={0}
+            snapPoints={snapPoints}
+            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+          >
+            <ModalShareTask 
+              idUser={1}
+              idTask={data.item.id}
+              nameTask={data.item.name}
+            />
           </BottomSheetModal>
 
         </View>
@@ -119,8 +129,8 @@ export default function Tasks({tasks, setTasks}) {
       )}
       renderHiddenItem={(data, rowMap) => (
         <View style={styles.itemRigth}>
-          <TouchableOpacity 
-            onPress={() => deleteTask(data.item.id, tasks, setTasks)} 
+          <TouchableOpacity
+            onPress={() => deleteTask(data.item.id, tasks, setTasks)}
             style={{ alignItems: 'center' }}>
             <Feather name="trash-2" size={20} color="white" />
           </TouchableOpacity>
