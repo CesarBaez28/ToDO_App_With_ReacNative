@@ -7,6 +7,8 @@ import StyledText from "./StyledText";
 import theme from "../theme";
 import ModalEditTask from "./ModalEditTask";
 import ModalShareTask from "./ModalShareTask";
+import CheckMark from "./CheckMark";
+import { deleteTask } from "../api";
 
 import 'react-native-gesture-handler'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function Tasks({tasks}) {
+export default function Tasks({tasks, setTasks}) {
 
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
@@ -77,8 +79,12 @@ export default function Tasks({tasks}) {
         <View style={styles.container}>
           <TouchableOpacity onPress={()=> handlePresentModal()} style={styles.task}>
 
-            <TouchableOpacity style={styles.circle}>
-            </TouchableOpacity>
+            <CheckMark 
+              id={data.item.id} 
+              completed={data.item.completed}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
 
             <View style={styles.text}>
               <StyledText>{data.item.name} </StyledText>
@@ -113,7 +119,9 @@ export default function Tasks({tasks}) {
       )}
       renderHiddenItem={(data, rowMap) => (
         <View style={styles.itemRigth}>
-          <TouchableOpacity style={{ alignItems: 'center' }}>
+          <TouchableOpacity 
+            onPress={() => deleteTask(data.item.id, tasks, setTasks)} 
+            style={{ alignItems: 'center' }}>
             <Feather name="trash-2" size={20} color="white" />
           </TouchableOpacity>
         </View>

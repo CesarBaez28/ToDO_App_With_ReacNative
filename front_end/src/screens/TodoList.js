@@ -7,7 +7,6 @@ import Tasks from "../components/Tasks";
 import {BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { getTasks } from '../api';
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
 
 export default function TodoList({ navigation }) {
 
-  const listTasks = getTasks(1);
+  const [listTasks, setTasks] = getTasks(1);
 
   return (
     <GradiantBackground>
@@ -45,7 +44,7 @@ export default function TodoList({ navigation }) {
             fontSize={'heading2'}
           >Lista de tareas</StyledText>
 
-          <Tasks tasks={listTasks} />
+          <Tasks tasks={listTasks} setTasks={setTasks}/>
 
           <InputAddTask />
           
