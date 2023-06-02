@@ -1,5 +1,3 @@
-import { getTasks } from '../api';
-import { useEffect } from 'react';
 import LoginScreen from '../screens/Login';
 import TodoList from '../screens/TodoList';
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,16 +8,6 @@ import StyledLink from './StyledLink';
 const RootStack = createStackNavigator();
 
 const Main = () => {
-
-  const loadTaks = async () => {
-    const data = await getTasks();
-    console.log(data);
-  }
-
-  useEffect(() => {
-    loadTaks()
-  }, [])
-
   return (
     <NavigationContainer>
       <RootStack.Navigator>

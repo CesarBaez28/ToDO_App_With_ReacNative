@@ -5,6 +5,7 @@ import GradiantBackground from "../components/GradientBackground";
 import Heading from "../components/Heading";
 import Tasks from "../components/Tasks";
 import {BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { getTasks } from '../api';
 
 
 const styles = StyleSheet.create({
@@ -27,6 +28,9 @@ const styles = StyleSheet.create({
 })
 
 export default function TodoList({ navigation }) {
+
+  const listTasks = getTasks(1);
+
   return (
     <GradiantBackground>
       <BottomSheetModalProvider>
@@ -41,7 +45,7 @@ export default function TodoList({ navigation }) {
             fontSize={'heading2'}
           >Lista de tareas</StyledText>
 
-          <Tasks  />
+          <Tasks tasks={listTasks} />
 
           <InputAddTask />
           

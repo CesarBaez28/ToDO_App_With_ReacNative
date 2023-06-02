@@ -1,6 +1,20 @@
-const API = "http://10.0.2.2:3000/tasks";
+import { useEffect, useState } from "react";
 
-export const getTasks = async () => {
-  const res = await fetch(API);
-  return await res.json();
+const API = "https://9161-206-85-14-1.ngrok.io/tasks";
+
+export const getTasks = (id) => {
+
+  const [listTasks, setTasks] = useState(null);
+
+  async function loadTask() {
+    const res = await fetch(API+`/${id}`);
+    const data = await res.json();
+    setTasks(data);
+  }
+
+  useEffect(() => {
+    loadTask()
+  }, [])
+
+  return listTasks
 }

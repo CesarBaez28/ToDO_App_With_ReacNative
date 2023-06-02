@@ -53,65 +53,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const tareas = [
-  {
-    id: 1,
-    title: "Hacer ejercicio"
-  },
-  {
-    id: 2,
-    title: "Ir de compras"
-  },
-  {
-    id: 3,
-    title: "Coordinar proyecto"
-  },
-  {
-    id: 4,
-    title: "Hacer ejercicio"
-  },
-  {
-    id: 5,
-    title: "Ir de compras"
-  },
-  {
-    id: 6,
-    title: "Coordinar proyecto"
-  },
-  {
-    id: 7,
-    title: "Hacer ejercicio"
-  },
-  {
-    id: 8,
-    title: "Ir de compras"
-  },
-  {
-    id: 9,
-    title: "Coordinar proyecto"
-  },
-  {
-    id: 10,
-    title: "Hacer ejercicio"
-  },
-  {
-    id: 11,
-    title: "Ir de compras"
-  },
-  {
-    id: 12,
-    title: "Coordinar proyecto"
-  },
-]
-
-export default function Tasks() {
-
-  const [listData, setListData] = useState(
-    tareas.map((items, index) => ({
-      key: `${items.id}`,
-      title: items.title
-    }))
-  )
+export default function Tasks({tasks}) {
 
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
@@ -128,7 +70,8 @@ export default function Tasks() {
 
   return (
     <SwipeListView
-      data={listData}
+      data={tasks}
+      keyExtractor={(task) => task.id}
       renderItem={(data, rowMap) => (
 
         <View style={styles.container}>
@@ -138,7 +81,7 @@ export default function Tasks() {
             </TouchableOpacity>
 
             <View style={styles.text}>
-              <StyledText>{data.item.title} </StyledText>
+              <StyledText>{data.item.name} </StyledText>
             </View>
 
             <TouchableOpacity onPress={()=> handlePresentShared()} style={styles.iconRigth}>
