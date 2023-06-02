@@ -60,7 +60,7 @@ export default function Tasks({tasks, setTasks}) {
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
 
-  const snapPoints = ["65%"]
+  const snapPoints = ["70%"]
 
   function handlePresentModal() {
     bottonSheetModalRef.current?.present()

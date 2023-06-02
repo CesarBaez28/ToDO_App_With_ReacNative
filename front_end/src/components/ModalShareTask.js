@@ -3,6 +3,9 @@ import { View, StyleSheet } from 'react-native'
 import StyleTextInput from "./StyledTextInput";
 import StyledText from "./StyledText"
 import ButtonPrimary from "./ButtonPrimary";
+import { Formik } from "formik";
+import FormikInputValue from "../components/FormikInputValue";
+import { shareTaskValidationSchema } from "../ValidationsSchemas/shareTask";
 
 const styles = StyleSheet.create({
   container: {
@@ -37,23 +40,39 @@ const styles = StyleSheet.create({
   }
 })
 
+const initialValue = {
+  email: ""
+}
+
 export default function ModalShareTask({ }) {
   return (
-    <View style={styles.container}>
-      <StyledText fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>Compartir tarea</StyledText>
-      <StyledText style={styles.text} fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>"Nombre de la tarea"</StyledText>
+    <Formik validationSchema={shareTaskValidationSchema} initialValues={initialValue}
+      onSubmit={values => console.log(values)}
+    >
+      {({handleSubmit}) => {
+        return (
+          <View style={styles.container}>
+            <StyledText fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>Compartir tarea</StyledText>
+            <StyledText style={styles.text} fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>"Nombre de la tarea"</StyledText>
 
-      <StyledText style={styles.description}>
-       Entre el correo del usuario con quien quieres compartir tu tarea. 
-       Comparte una tarea con alguien y manténganse sincronizados con sus metas cada día.
-      </StyledText>
+            <StyledText style={styles.description}>
+              Entre el correo del usuario con quien quieres compartir tu tarea.
+              Comparte una tarea con alguien y manténganse sincronizados con sus metas cada día.
+            </StyledText>
 
-      <View style={styles.inputContainer}>
-        <StyleTextInput placeholder={'Ingrese el correo del usuario'} style={styles.input} />
-        <ButtonPrimary style={styles.button}>
-          <StyledText color={'white'}>Compartir</StyledText>
-        </ButtonPrimary>
-      </View>
-    </View>
+            <View style={styles.inputContainer}>
+              <FormikInputValue
+                style={styles.input}
+                name='email'
+                placeholder='Ingrese el correo de su contacto'
+              />
+              <ButtonPrimary onPress={handleSubmit} style={styles.button}>
+                <StyledText color={'white'}>Compartir</StyledText>
+              </ButtonPrimary>
+            </View>
+          </View>
+        )
+      }}
+    </Formik>
   )
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "https://e70e-206-85-14-12.ngrok.io/tasks";
+const API = "https://27c4-206-85-14-13.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {

@@ -13,12 +13,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const FormikInputValue = ({name, ...props}) => {
+const FormikInputValue = ({name, style, ...props}) => {
   const [field, meta, helpers] = useField(name)
 
   return (
     <>
       <StyleTextInput 
+        style={style}
         error={meta.error}
         value={field.value}
         onChangeText={value => helpers.setValue(value)}
