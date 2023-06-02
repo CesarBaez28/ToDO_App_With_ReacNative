@@ -36,6 +36,9 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 
   const response = await fetch(API+`/${id}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       value: completed ? false : true
     })
