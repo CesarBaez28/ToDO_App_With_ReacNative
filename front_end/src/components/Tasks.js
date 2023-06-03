@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
 
 export default function Tasks({ tasks, setTasks }) {
 
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [selectedTaskName, setSelectedTaskName] = useState(null);
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
 
@@ -66,7 +68,9 @@ export default function Tasks({ tasks, setTasks }) {
     bottonSheetModalRef.current?.present()
   }
 
-  function handlePresentShared() {
+  function handlePresentShared(id, name) {
+    setSelectedTaskId(id);
+    setSelectedTaskName(name);
     bottonSheetModalShareRef.current?.present();
   }
 
@@ -91,11 +95,11 @@ export default function Tasks({ tasks, setTasks }) {
             </View>
 
             {data.item.id_shared_with != null ? (
-              <TouchableOpacity onPress={() => handlePresentShared()} style={styles.iconRigth}>
+              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name)} style={styles.iconRigth}>
                 <Feather name="users" size={22} color="black" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => handlePresentShared()} style={styles.iconRigth}>
+              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name)} style={styles.iconRigth}>
                 <Entypo name="share-alternative" size={22} color="black" />
               </TouchableOpacity>
             )}
@@ -119,8 +123,8 @@ export default function Tasks({ tasks, setTasks }) {
           >
             <ModalShareTask 
               idUser={1}
-              idTask={data.item.id}
-              nameTask={data.item.name}
+              idTask={selectedTaskId}
+              nameTask={selectedTaskName}
             />
           </BottomSheetModal>
 

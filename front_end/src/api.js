@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
 
-const API = "https://27c4-206-85-14-13.ngrok.io/tasks";
+const API = "https://f339-206-85-14-13.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {
@@ -59,7 +59,7 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 }
 
 //Share task 
-export const shareTask = async (idUser, idTask, nameTask, email) => {
+export const shareTask = async (idUser, idTask, nameTask, email, resetForm) => {
   const response = await fetch(API+"/shared_tasks", {
     headers: {
       "Content-Type": "application/json"
@@ -79,4 +79,5 @@ export const shareTask = async (idUser, idTask, nameTask, email) => {
     "Felicidades",
     `Has compartido la tarea "${nameTask}" con ${email}`
   )
+  resetForm({})
 } 

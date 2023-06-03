@@ -48,13 +48,13 @@ const initialValue = {
 export default function ModalShareTask({idUser, idTask, nameTask}) {
   return (
     <Formik validationSchema={shareTaskValidationSchema} initialValues={initialValue}
-      onSubmit={values => shareTask(idUser, idTask, nameTask, values.email)}
+      onSubmit={(values, {resetForm}) => shareTask(idUser, idTask, nameTask, values.email, resetForm)}
     >
       {({handleSubmit}) => {
         return (
           <View style={styles.container}>
             <StyledText fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>Compartir tarea</StyledText>
-            <StyledText style={styles.text} fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>"Nombre de la tarea"</StyledText>
+            <StyledText style={styles.text} fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>"{nameTask}"</StyledText>
 
             <StyledText style={styles.description}>
               Entre el correo del usuario con quien quieres compartir tu tarea.
