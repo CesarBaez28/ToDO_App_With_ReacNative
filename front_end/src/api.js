@@ -59,7 +59,7 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 }
 
 //Share task 
-export const shareTask = async (idUser, idTask, nameTask, email, resetForm) => {
+export const shareTask = async (idUser, idTask, nameTask, email, resetForm, closeModal) => {
   const response = await fetch(API+"/shared_tasks", {
     headers: {
       "Content-Type": "application/json"
@@ -80,4 +80,5 @@ export const shareTask = async (idUser, idTask, nameTask, email, resetForm) => {
     `Has compartido la tarea "${nameTask}" con ${email}`
   )
   resetForm({})
+  closeModal()
 } 

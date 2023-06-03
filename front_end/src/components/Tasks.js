@@ -61,17 +61,32 @@ export default function Tasks({ tasks, setTasks }) {
   const [selectedTaskName, setSelectedTaskName] = useState(null);
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
+  const bottonSheetModalSharedRef = useRef(null)
 
   const snapPoints = ["70%"]
 
-  function handlePresentModal() {
-    bottonSheetModalRef.current?.present()
+  function setSelectedTask(id, name) {
+    setSelectedTaskId(id);
+    setSelectedTaskName(name);
+  }
+
+  function handlePresentModal(id, name) {
+    setSelectedTask(id, name);
+    bottonSheetModalRef.current?.present();
   }
 
   function handlePresentShared(id, name) {
-    setSelectedTaskId(id);
-    setSelectedTaskName(name);
+    setSelectedTask(id, name);
+    bottonSheetModalSharedRef.current?.present();
+  }
+
+  function handlePresentShare(id, name) {
+    setSelectedTask(id, name);
     bottonSheetModalShareRef.current?.present();
+  }
+
+  function handleClosePresentShared() {
+    bottonSheetModalShareRef.current?.close();
   }
 
   return (
@@ -99,7 +114,7 @@ export default function Tasks({ tasks, setTasks }) {
                 <Feather name="users" size={22} color="black" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name)} style={styles.iconRigth}>
+              <TouchableOpacity onPress={() => handlePresentShare(data.item.id, data.item.name)} style={styles.iconRigth}>
                 <Entypo name="share-alternative" size={22} color="black" />
               </TouchableOpacity>
             )}
@@ -121,11 +136,23 @@ export default function Tasks({ tasks, setTasks }) {
             snapPoints={snapPoints}
             backgroundStyle={{ backgroundColor: "#EEEEEE" }}
           >
-            <ModalShareTask 
+            <ModalShareTask
+              closeModal={handleClosePresentShared}
               idUser={1}
               idTask={selectedTaskId}
               nameTask={selectedTaskName}
             />
+          </BottomSheetModal>
+
+          <BottomSheetModal
+            ref={bottonSheetModalSharedRef}
+            index={0}
+            snapPoints={snapPoints}
+            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+          >
+            <View>
+              <StyledText>Ya está tarea está compartida</StyledText>
+            </View>
           </BottomSheetModal>
 
         </View>
