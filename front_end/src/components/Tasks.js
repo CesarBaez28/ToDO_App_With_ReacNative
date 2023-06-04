@@ -7,6 +7,7 @@ import StyledText from "./StyledText";
 import theme from "../theme";
 import ModalEditTask from "./ModalEditTask";
 import ModalShareTask from "./ModalShareTask";
+import ModalTaskShared from "./ModalTaskShared";
 import CheckMark from "./CheckMark";
 import { deleteTask } from "../api";
 
@@ -59,6 +60,8 @@ export default function Tasks({ tasks, setTasks }) {
 
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedTaskName, setSelectedTaskName] = useState(null);
+  const [selectedSharedWith, setSelectedSharedWith] = useState(null)
+  const [selectedCompleted, setSelectedCompleted] = useState(null)
   const bottonSheetModalRef = useRef(null)
   const bottonSheetModalShareRef = useRef(null)
   const bottonSheetModalSharedRef = useRef(null)
@@ -70,13 +73,20 @@ export default function Tasks({ tasks, setTasks }) {
     setSelectedTaskName(name);
   }
 
+  function setSelectedSharedTask(id, name, shareWith, completed) {
+    setSelectedTaskId(id);
+    setSelectedTaskName(name);
+    setSelectedSharedWith(shareWith);
+    setSelectedCompleted(completed);
+  }
+
   function handlePresentModal(id, name) {
     setSelectedTask(id, name);
     bottonSheetModalRef.current?.present();
   }
 
-  function handlePresentShared(id, name) {
-    setSelectedTask(id, name);
+  function handlePresentShared(id, name, shareWith, completed) {
+    setSelectedSharedTask(id, name, shareWith, completed);
     bottonSheetModalSharedRef.current?.present();
   }
 
@@ -110,7 +120,7 @@ export default function Tasks({ tasks, setTasks }) {
             </View>
 
             {data.item.id_shared_with != null ? (
-              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name)} style={styles.iconRigth}>
+              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name, data.item.id_shared_with, data.item.completed)} style={styles.iconRigth}>
                 <Feather name="users" size={22} color="black" />
               </TouchableOpacity>
             ) : (
@@ -150,9 +160,12 @@ export default function Tasks({ tasks, setTasks }) {
             snapPoints={snapPoints}
             backgroundStyle={{ backgroundColor: "#EEEEEE" }}
           >
-            <View>
-              <StyledText>Ya está tarea está compartida</StyledText>
-            </View>
+            <ModalTaskShared
+              id={selectedTaskId}
+              nameTask={selectedTaskName}
+              idShareWith={selectedSharedWith}
+              completed={selectedCompleted}
+            />
           </BottomSheetModal>
 
         </View>

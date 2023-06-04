@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
 
-const API = "https://f339-206-85-14-13.ngrok.io/tasks";
+const API = "https://c39f-206-85-14-12.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {
