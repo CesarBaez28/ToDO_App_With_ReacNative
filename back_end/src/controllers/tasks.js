@@ -29,6 +29,13 @@ export default {
     res.status(200).send(task);
   },
 
+  updateTask: async (req, res) => {
+    const {newName, status} = req.body;
+    const idTask = req.params.id;
+    const [task] = await tasks.updateTask(connection, newName,status, idTask);
+    res.status(200).send(task);
+  },
+
   deleteTask: async (req, res) => {
     const id = req.params.id;
     await tasks.deleteTask(connection, id);

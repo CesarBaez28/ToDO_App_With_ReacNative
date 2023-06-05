@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
   }
 })
 
-const StyleTextInput = ({style = {}, placeholder, error, ...props}) => {
+const StyleTextInput = ({style = {}, value,onChangeText, placeholder, error, ...props}) => {
   const inputStyle = [
     styles.textInput,
     style,
     error && styles.error
   ]
  
-  return <TextInput placeholder= {placeholder} style={inputStyle} {...props} />
+  return <TextInput onChangeText={onChangeText} value={value} placeholder= {placeholder} style={inputStyle} {...props} />
 }
 
 export default StyleTextInput

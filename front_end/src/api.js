@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
 
-const API = "https://6d43-206-85-14-13.ngrok.io/tasks";
+const API = "https://0f47-206-85-14-11.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {
@@ -89,17 +89,17 @@ export const getSharedTask = (id) => {
   const [author, setAuthor] = useState(null)
   const [sharedWith, setSharedWith] = useState(null)
 
-  useEffect( () => {
+  useEffect(() => {
     fetchInfo()
   }, [])
 
   async function fetchInfo() {
-    const response = await fetch(API+`/shared_tasks/${id}`,
+    const response = await fetch(API + `/shared_tasks/${id}`,
       {
         method: "GET"
       }
     );
-    const {author, shared_with} = await response.json()
+    const { author, shared_with } = await response.json()
     setAuthor(author[0].name)
     setSharedWith(shared_with[0].name)
     console.log(author);
@@ -111,7 +111,7 @@ export const getSharedTask = (id) => {
 
 //Add a new Task
 export const AddTask = async (listTasks, setTasks, taskName) => {
-  const response = await fetch(API,{
+  const response = await fetch(API, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -123,5 +123,30 @@ export const AddTask = async (listTasks, setTasks, taskName) => {
   });
 
   const newTask = await response.json()
-  setTasks([...listTasks, {...newTask, id_shared_with: null}])
+  setTasks([...listTasks, { ...newTask, id_shared_with: null }])
+}
+
+//Update a task
+export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) => {
+  
+  const response = fetch(API + `/edit/${idTask}`, {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      newName: nameTask,
+      status: status 
+    })
+  });
+
+  console.log(typeof(status));
+
+  setTasks(
+    listTasks.map((task) =>
+      task.id === idTask
+        ? { ...task, name: nameTask, completed: status}
+        : task
+    )
+  );
 }

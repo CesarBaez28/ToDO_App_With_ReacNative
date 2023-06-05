@@ -32,6 +32,10 @@ export default {
     return conexion.query(`DELETE FROM tasks WHERE id = ?`, [id])
   },
 
+  updateTask: function (conexion, newName, status, id) {
+    return conexion.query(`UPDATE tasks SET name = '${newName}', completed = ${status} WHERE id = ?`, [id]);
+  },
+
   toggleCompleted: function (conexion, status, id) {
     const statusValue = status === true ? "TRUE" : "FALSE";
     return conexion.query(`UPDATE tasks SET completed = ${statusValue} WHERE id = ?`, [id])

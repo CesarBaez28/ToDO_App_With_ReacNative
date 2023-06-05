@@ -68,9 +68,10 @@ export default function Tasks({ tasks, setTasks }) {
 
   const snapPoints = ["70%"]
 
-  function setSelectedTask(id, name) {
+  function setSelectedTask(id, name, completed) {
     setSelectedTaskId(id);
     setSelectedTaskName(name);
+    setSelectedCompleted(completed);
   }
 
   function setSelectedSharedTask(id, name, shareWith, completed) {
@@ -80,8 +81,8 @@ export default function Tasks({ tasks, setTasks }) {
     setSelectedCompleted(completed);
   }
 
-  function handlePresentModal(id, name) {
-    setSelectedTask(id, name);
+  function handlePresentModal(id, name, completed) {
+    setSelectedTask(id, name, completed);
     bottonSheetModalRef.current?.present();
   }
 
@@ -106,7 +107,7 @@ export default function Tasks({ tasks, setTasks }) {
       renderItem={(data, rowMap) => (
 
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => handlePresentModal()} style={styles.task}>
+          <TouchableOpacity onPress={() => handlePresentModal(data.item.id, data.item.name, data.item.completed)} style={styles.task}>
 
             <CheckMark
               id={data.item.id}
@@ -137,7 +138,13 @@ export default function Tasks({ tasks, setTasks }) {
             snapPoints={snapPoints}
             backgroundStyle={{ backgroundColor: "#EEEEEE" }}
           >
-            <ModalEditTask />
+            <ModalEditTask 
+              idTask={selectedTaskId}
+              nameTask={selectedTaskName}
+              completed={selectedCompleted}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
           </BottomSheetModal>
 
           <BottomSheetModal

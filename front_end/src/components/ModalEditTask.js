@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from 'react-native'
 import StyleTextInput from "./StyledTextInput";
 import StyledText from "./StyledText"
 import ButtonPrimary from "./ButtonPrimary";
 import { SelectList } from 'react-native-dropdown-select-list'
+import { updateTask } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,14 +39,25 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function ModalEditTask({ }) {
+export default function ModalEditTask({idTask, nameTask, completed, tasks, setTasks}) {
 
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = useState("");
+  const [inputValue, setInputValue] = useState(nameTask);
 
   const data = [
     { key: '1', value: 'Completado'},
-    { key: '2', value: 'No completado' },
+    { key: '0', value: 'No completado' },
   ]
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
+
+  const editTask = () => {
+    if (nameTask != inputValue || completed != selected) {
+      updateTask(idTask, inputValue, parseInt(selected), tasks, setTasks);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -53,20 +65,24 @@ export default function ModalEditTask({ }) {
 
       <View style={styles.inputContainer}>
         <StyledText>Título</StyledText>
-        <StyleTextInput style={styles.input} />
+        <StyleTextInput 
+          onChangeText={handleInputChange}
+          value={inputValue}
+          style={styles.input} 
+        />
 
         <StyledText>Estado</StyledText>
         <SelectList
           setSelected={(val) => setSelected(val)}
           data={data}
-          save="value"
-          defaultOption={data[0]}
+          save="key"
+          defaultOption={completed === 1 ? data[0] : data[1]}
           search = {false}
           boxStyles={styles.selectList}
           dropdownStyles ={{backgroundColor: "white"}}
         />
 
-        <ButtonPrimary style={styles.button}>
+        <ButtonPrimary onPress={editTask} style={styles.button}>
           <StyledText color={'white'} style={styles.text}>Guardar</StyledText>
         </ButtonPrimary>
       </View>
