@@ -13,7 +13,7 @@ export default {
   },
 
   getSharedTaskByID: function (conexion, id) {
-    return conexion.query(`SELECT * FROM share_todos WHERE todo_id = ?`, [id])
+    return conexion.query(`SELECT * FROM shared_tasks WHERE id_task = ?`, [id])
   },
 
   getUserByID: function (conexion, id) {

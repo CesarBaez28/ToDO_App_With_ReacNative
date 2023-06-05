@@ -11,8 +11,8 @@ export default {
   getSharedTaskByID: async (req, res) => {
     const id = req.params.id;
     const [task] = await tasks.getSharedTaskByID(connection, id);
-    const [author] = await tasks.getUserByID(connection, task[0].id);
-    const [shared_with] = await tasks.getUserByID(connection, task[0].id);
+    const [author] = await tasks.getUserByID(connection, task[0].id_user);
+    const [shared_with] = await tasks.getUserByID(connection, task[0].id_shared_with);
     res.status(200).send({ author, shared_with });
   },
 

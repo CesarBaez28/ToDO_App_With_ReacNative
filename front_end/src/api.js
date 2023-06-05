@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
 
-const API = "https://c39f-206-85-14-12.ngrok.io/tasks";
+const API = "https://b9f6-206-85-14-12.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {
@@ -9,7 +9,7 @@ export const getTasks = (id) => {
   const [listTasks, setTasks] = useState(null);
 
   async function loadTask() {
-    const res = await fetch(API+`/${id}`);
+    const res = await fetch(API + `/${id}`);
     const data = await res.json();
     setTasks(data);
   }
@@ -22,9 +22,9 @@ export const getTasks = (id) => {
 }
 
 //Delete a task
-export const deleteTask = async (id, listTasks, setTasks ) => {
+export const deleteTask = async (id, listTasks, setTasks) => {
 
-  const response = await fetch(API+`/${id}`, {
+  const response = await fetch(API + `/${id}`, {
     method: 'DELETE',
   })
 
@@ -35,7 +35,7 @@ export const deleteTask = async (id, listTasks, setTasks ) => {
 //Change the status of the checkmark
 export const toggleTask = async (id, listTasks, setTasks, completed) => {
 
-  const response = await fetch(API+`/${id}`, {
+  const response = await fetch(API + `/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -48,9 +48,9 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
   const data = await response.json()
 
   setTasks(
-    listTasks.map((task) => 
+    listTasks.map((task) =>
       task.id === id
-        ? {...task, completed: task.completed === 1 ? 0 : 1 }
+        ? { ...task, completed: task.completed === 1 ? 0 : 1 }
         : task
     )
   );
@@ -60,7 +60,7 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 
 //Share task 
 export const shareTask = async (idUser, idTask, nameTask, email, resetForm, closeModal) => {
-  const response = await fetch(API+"/shared_tasks", {
+  const response = await fetch(API + "/shared_tasks", {
     headers: {
       "Content-Type": "application/json"
     },
@@ -81,4 +81,30 @@ export const shareTask = async (idUser, idTask, nameTask, email, resetForm, clos
   )
   resetForm({})
   closeModal()
-} 
+}
+
+//Get a shared task
+export const getSharedTask = (id) => {
+
+  const [author, setAuthor] = useState(null)
+  const [sharedWith, setSharedWith] = useState(null)
+
+  useEffect( () => {
+    fetchInfo()
+  }, [])
+
+  async function fetchInfo() {
+    const response = await fetch(API+`/shared_tasks/${id}`,
+      {
+        method: "GET"
+      }
+    );
+    const {author, shared_with} = await response.json()
+    setAuthor(author[0].name)
+    setSharedWith(shared_with[0].name)
+    console.log(author);
+    console.log(shared_with);
+  }
+
+  return [author, sharedWith]
+}

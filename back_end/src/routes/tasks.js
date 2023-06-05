@@ -4,7 +4,7 @@ import tasks from "../controllers/tasks";
 const router = Router();
 
 router.get('/tasks/:id', tasks.getTasks);
-router.get('/tasks/shared_todos/:id', tasks.getSharedTaskByID);
+router.get('/tasks/shared_tasks/:id', tasks.getSharedTaskByID);
 router.get('/users/:id', tasks.getUserById);
 router.put('/tasks/:id', tasks.toggleCompleted);
 router.delete('/tasks/:id', tasks.deleteTask);

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from 'react-native'
 import StyledText from "./StyledText"
+import { getSharedTask } from "../api";
 
 const styles = StyleSheet.create({
   nameTask: {
@@ -43,6 +44,14 @@ const styles = StyleSheet.create({
 })
 
 export default function ModalTaskShared({ id, nameTask, idShareWith, completed }) {
+
+  const [author, sharedWith] = getSharedTask(id)
+
+  const status = [
+    styles.status,
+    completed === 1 ? styles.completed : styles.incompleted
+  ]
+
   return (
     <View>
       <StyledText fontSize={'subheading'} fontWeight={'bold'} aling={'center'}>Tarea compartida</StyledText>
@@ -52,8 +61,8 @@ export default function ModalTaskShared({ id, nameTask, idShareWith, completed }
         <StyledText fontSize={'subheading'} aling={'center'}> Estado </StyledText>
 
         <View style={styles.statusContainer}>
-          <View style={[styles.status, styles.completed]}>
-            <StyledText color={'white'} aling={'center'}>Completada</StyledText>
+          <View style={status}>
+            <StyledText color={'white'} aling={'center'}>{completed === 1 ? "Completada" : "Incompleta"}</StyledText>
           </View>
         </View>
       </View>
@@ -63,10 +72,10 @@ export default function ModalTaskShared({ id, nameTask, idShareWith, completed }
 
         <View style={styles.participantsContainer}>
           <View style={styles.participant}>
-            <StyledText color={'white'} aling={'center'}>César Báez</StyledText>
+            <StyledText color={'white'} aling={'center'}>{author}</StyledText>
           </View>
           <View style={styles.participant}>
-            <StyledText color={'white'} aling={'center'}>Isaac Báez</StyledText>
+            <StyledText color={'white'} aling={'center'}>{sharedWith}</StyledText>
           </View>
         </View>
 
