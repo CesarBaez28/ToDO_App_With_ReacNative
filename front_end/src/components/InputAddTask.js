@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import theme from "../theme";
 import { Ionicons } from '@expo/vector-icons';
-
+import { AddTask } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,10 +33,24 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 })
 
-const InputAddTask = ({ style = {}, error, ...props }) => {
+const InputAddTask = ({ style = {}, error, color, listTasks, setTasks, ...props }) => {
+
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
+
+  const handleOnSubmitEditing = () => {
+    if (inputValue != '') {
+      AddTask(listTasks, setTasks, inputValue);
+    }
+    setInputValue('');    
+  };
+
   const inputStyle = [
     styles.textInput,
     style,
@@ -51,7 +65,14 @@ const InputAddTask = ({ style = {}, error, ...props }) => {
         <View style={styles.iconContainer}>
           <Ionicons name="add-outline" size={36} color="white" />
         </View>
-        <TextInput style={inputStyle} {...props} />
+        <TextInput 
+        value={inputValue}
+        onChangeText={handleInputChange}
+        placeholderTextColor={color} 
+        onSubmitEditing={handleOnSubmitEditing}
+        placeholder="Agregue una tarea" 
+        style={inputStyle} {...props} 
+        />
       </View>
     </KeyboardAvoidingView>
   )

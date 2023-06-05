@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
 
-const API = "https://b9f6-206-85-14-12.ngrok.io/tasks";
+const API = "https://6d43-206-85-14-13.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = (id) => {
@@ -107,4 +107,21 @@ export const getSharedTask = (id) => {
   }
 
   return [author, sharedWith]
+}
+
+//Add a new Task
+export const AddTask = async (listTasks, setTasks, taskName) => {
+  const response = await fetch(API,{
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify({
+      id_user: 1,
+      title: taskName
+    })
+  });
+
+  const newTask = await response.json()
+  setTasks([...listTasks, {...newTask, id_shared_with: null}])
 }

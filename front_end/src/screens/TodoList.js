@@ -46,7 +46,11 @@ export default function TodoList({ navigation }) {
 
           <Tasks tasks={listTasks} setTasks={setTasks}/>
 
-          <InputAddTask />
+          <InputAddTask 
+          listTasks={listTasks}
+          setTasks={setTasks}
+          color={'white'}
+          />
           
         </SafeAreaView>
       </BottomSheetModalProvider>

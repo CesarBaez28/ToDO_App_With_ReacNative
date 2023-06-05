@@ -43,8 +43,10 @@ export default {
   },
 
   createTask: async(req, res) => {
-    const { id_task, title } = req.body;
-    const [task] = await tasks.createTask(connection, id_task, title);
-    res.status(201).send(task);
+    const { id_user, title } = req.body;
+    const [task] = await tasks.createTask(connection, id_user, title);
+    const taskId = task.insertId;
+    const [newTask] = await tasks.getTask(connection, taskId)
+    res.status(201).send(newTask[0]);
   }
 }
