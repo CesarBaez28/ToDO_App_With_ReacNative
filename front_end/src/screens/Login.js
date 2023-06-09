@@ -29,15 +29,15 @@ const styles = StyleSheet.create({
 
 export default function LoginScreen({navigation}) {
   
-  const handleLogin = (values, setErrors) => {
+  const handleLogin = (values, setErrors, resetForm) => {
     const {email, password} = values
-    login(email, password, setErrors, navigation);
+    login(email, password, setErrors, navigation, resetForm);
   }
 
   return <>
     <GradiantBackground>
       <Formik validationSchema={loginValidationSchema} initialValues={initialValues}
-        onSubmit={ (values, errors) => handleLogin(values, errors.setErrors)}>
+        onSubmit={ (values, {setErrors, resetForm}) => handleLogin(values, setErrors, resetForm)}>
 
         {({ handleSubmit}) => {
           return (

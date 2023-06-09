@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import StyledText from "./StyledText";
 import theme from "../theme";
 import { Entypo } from '@expo/vector-icons';
-import { user } from "../asyncStorage";
+import { getUserDataForComponents, getInitials } from "../asyncStorage";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,32 +28,27 @@ const styles = StyleSheet.create({
   }
 })
 
-const getInitials = () => {
-  let initials = user.name[0];
-  for (let index = 1; index < user.name.length; index++) {
-    if (user.name[index] === ' ') {
-      initials += user.name[index+1];
-      break;
-    }
+export default function Heading({ navigation }) {
+
+  const [user, setUser] = getUserDataForComponents();
+
+  if (user) {
+
+    const initials = getInitials(user.name);    
+
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.profile}
+          onPress={() => navigation.navigate('ModalPerfil')}
+        >
+          <StyledText aling={'center'}>{initials}</StyledText>
+        </TouchableOpacity>
+        <StyledText fontSize={'subheading'} style={styles.text} color={'white'} fontWeight={'bold'}>{user.name}</StyledText>
+        <TouchableOpacity style={styles.options}>
+          <Entypo name="dots-three-horizontal" size={18} color="white" />
+        </TouchableOpacity>
+      </View>
+    )
   }
-  return initials;
-}
-
-const initials = getInitials();
-
-export default function Heading({navigation}) {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity 
-      style={styles.profile}
-      onPress={()=> navigation.navigate('ModalPerfil')}
-      >
-        <StyledText aling={'center'}>{initials}</StyledText>
-      </TouchableOpacity>
-      <StyledText fontSize={'subheading'} style={styles.text} color={'white'} fontWeight={'bold'}>{user.name}</StyledText>
-      <TouchableOpacity style={styles.options}>
-        <Entypo name="dots-three-horizontal" size={18} color="white" />
-      </TouchableOpacity>
-    </View>
-  )
 }

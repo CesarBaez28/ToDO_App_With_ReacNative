@@ -10,10 +10,10 @@ import ModalShareTask from "./ModalShareTask";
 import ModalTaskShared from "./ModalTaskShared";
 import CheckMark from "./CheckMark";
 import { deleteTask } from "../api";
-import { user } from "../asyncStorage";
 
 import 'react-native-gesture-handler'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
+import { getUserDataForComponents } from "../asyncStorage";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
 
 export default function Tasks({ tasks, setTasks }) {
-
+  const [user, setUser] = getUserDataForComponents();
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [selectedTaskName, setSelectedTaskName] = useState(null);
   const [selectedSharedWith, setSelectedSharedWith] = useState(null)
@@ -102,94 +102,96 @@ export default function Tasks({ tasks, setTasks }) {
     bottonSheetModalShareRef.current?.close();
   }
 
-  return (
-    <SwipeListView
-      data={tasks}
-      keyExtractor={(task) => task.id}
-      renderItem={(data, rowMap) => (
+  if (user) {
+    return (
+      <SwipeListView
+        data={tasks}
+        keyExtractor={(task) => task.id}
+        renderItem={(data, rowMap) => (
 
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => handlePresentModal(data.item.id, data.item.name, data.item.completed)} style={styles.task}>
+          <View style={styles.container}>
+            <TouchableOpacity onPress={() => handlePresentModal(data.item.id, data.item.name, data.item.completed)} style={styles.task}>
 
-            <CheckMark
-              id={data.item.id}
-              completed={data.item.completed}
-              tasks={tasks}
-              setTasks={setTasks}
-            />
+              <CheckMark
+                id={data.item.id}
+                completed={data.item.completed}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
 
-            <View style={styles.text}>
-              <StyledText>{data.item.name} </StyledText>
-            </View>
+              <View style={styles.text}>
+                <StyledText>{data.item.name} </StyledText>
+              </View>
 
-            {data.item.id_shared_with != null ? (
-              <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name, data.item.id_shared_with, data.item.completed)} style={styles.iconRigth}>
-                <Feather name="users" size={22} color="black" />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => handlePresentShare(data.item.id, data.item.name)} style={styles.iconRigth}>
-                <Entypo name="share-alternative" size={22} color="black" />
-              </TouchableOpacity>
-            )}
+              {data.item.id_shared_with != null ? (
+                <TouchableOpacity onPress={() => handlePresentShared(data.item.id, data.item.name, data.item.id_shared_with, data.item.completed)} style={styles.iconRigth}>
+                  <Feather name="users" size={22} color="black" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={() => handlePresentShare(data.item.id, data.item.name)} style={styles.iconRigth}>
+                  <Entypo name="share-alternative" size={22} color="black" />
+                </TouchableOpacity>
+              )}
 
-          </TouchableOpacity>
+            </TouchableOpacity>
 
-          <BottomSheetModal
-            ref={bottonSheetModalRef}
-            index={0}
-            snapPoints={snapPoints}
-            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
-          >
-            <ModalEditTask 
-              idTask={selectedTaskId}
-              nameTask={selectedTaskName}
-              completed={selectedCompleted}
-              tasks={tasks}
-              setTasks={setTasks}
-            />
-          </BottomSheetModal>
+            <BottomSheetModal
+              ref={bottonSheetModalRef}
+              index={0}
+              snapPoints={snapPoints}
+              backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+            >
+              <ModalEditTask
+                idTask={selectedTaskId}
+                nameTask={selectedTaskName}
+                completed={selectedCompleted}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
+            </BottomSheetModal>
 
-          <BottomSheetModal
-            ref={bottonSheetModalShareRef}
-            index={0}
-            snapPoints={snapPoints}
-            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
-          >
-            <ModalShareTask
-              closeModal={handleClosePresentShared}
-              idUser={user.id}
-              idTask={selectedTaskId}
-              nameTask={selectedTaskName}
-            />
-          </BottomSheetModal>
+            <BottomSheetModal
+              ref={bottonSheetModalShareRef}
+              index={0}
+              snapPoints={snapPoints}
+              backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+            >
+              <ModalShareTask
+                closeModal={handleClosePresentShared}
+                idUser={user.id}
+                idTask={selectedTaskId}
+                nameTask={selectedTaskName}
+              />
+            </BottomSheetModal>
 
-          <BottomSheetModal
-            ref={bottonSheetModalSharedRef}
-            index={0}
-            snapPoints={snapPoints}
-            backgroundStyle={{ backgroundColor: "#EEEEEE" }}
-          >
-            <ModalTaskShared
-              id={selectedTaskId}
-              nameTask={selectedTaskName}
-              idShareWith={selectedSharedWith}
-              completed={selectedCompleted}
-            />
-          </BottomSheetModal>
+            <BottomSheetModal
+              ref={bottonSheetModalSharedRef}
+              index={0}
+              snapPoints={snapPoints}
+              backgroundStyle={{ backgroundColor: "#EEEEEE" }}
+            >
+              <ModalTaskShared
+                id={selectedTaskId}
+                nameTask={selectedTaskName}
+                idShareWith={selectedSharedWith}
+                completed={selectedCompleted}
+              />
+            </BottomSheetModal>
 
-        </View>
+          </View>
 
-      )}
-      renderHiddenItem={(data, rowMap) => (
-        <View style={styles.itemRigth}>
-          <TouchableOpacity
-            onPress={() => deleteTask(data.item.id, tasks, setTasks)}
-            style={{ alignItems: 'center' }}>
-            <Feather name="trash-2" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
-      )}
-      rightOpenValue={-75}
-    />
-  )
+        )}
+        renderHiddenItem={(data, rowMap) => (
+          <View style={styles.itemRigth}>
+            <TouchableOpacity
+              onPress={() => deleteTask(data.item.id, tasks, setTasks)}
+              style={{ alignItems: 'center' }}>
+              <Feather name="trash-2" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
+        )}
+        rightOpenValue={-75}
+      />
+    )
+  }
 }

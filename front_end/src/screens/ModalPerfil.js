@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, TouchableOpac
 import StyledText from "../components/StyledText";
 import StyleTextInput from "../components/StyledTextInput";
 import theme from "../theme";
+import { getUserDataForComponents, getInitials, logout } from "../asyncStorage";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   },
   profileDescription: {
     marginTop: 10,
-     marginBottom: 30 
+    marginBottom: 30
   },
   profileContainer: {
     alignItems: 'center'
@@ -48,29 +49,37 @@ const styles = StyleSheet.create({
 })
 
 export default function ModalPerfil({ navigation }) {
-  return (
-    <View style={styles.container}>
 
-      <View style={styles.profileContainer}>
-        <View style={styles.profile} >
-          <StyledText fontSize={'heading2'} aling={'center'}>CB</StyledText>
+  const [user, setUser] = getUserDataForComponents();
+
+  if (user) {
+
+    const initials = getInitials(user.name);
+
+    return (
+      <View style={styles.container}>
+
+        <View style={styles.profileContainer}>
+          <View style={styles.profile} >
+            <StyledText fontSize={'heading2'} aling={'center'}>{initials}</StyledText>
+          </View>
         </View>
+
+        <View style={styles.profileDescription}>
+          <StyledText fontSize={'heading2'} aling={'center'}>{user.name}</StyledText>
+          <StyledText color={'gray'} aling={'center'}>{user.email}</StyledText>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <StyledText fontSize={'subheading'}>Nombre</StyledText>
+          <StyleTextInput placeholder={user.name} style={styles.input} />
+        </View>
+
+        <TouchableOpacity onPress={()=> logout(navigation) } style={styles.inputLogout}>
+          <StyledText style={styles.logout}>Cerrar sesión</StyledText>
+        </TouchableOpacity>
+
       </View>
-
-      <View style={styles.profileDescription}>
-        <StyledText fontSize={'heading2'} aling={'center'}>César Báez</StyledText>
-        <StyledText color={'gray'} aling={'center'}>Baezcesar329@gmail.com</StyledText>
-      </View>
-
-      <View style={styles.inputContainer}>
-        <StyledText fontSize={'subheading'}>Nombre</StyledText>
-        <StyleTextInput placeholder={'César Báez'} style={styles.input} />
-      </View>
-
-      <TouchableOpacity style={styles.inputLogout}>
-        <StyledText style={styles.logout}>Cerrar sesión</StyledText>
-      </TouchableOpacity>
-
-    </View>
-  );
+    );
+  }
 }

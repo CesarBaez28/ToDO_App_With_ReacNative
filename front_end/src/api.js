@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
-import { setUserData, user } from "./asyncStorage";
+import { getUserData } from "./asyncStorage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = "https://24f7-206-85-14-1.ngrok.io/tasks";
+const API = "https://abf2-206-85-14-11.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = () => {
@@ -11,6 +11,7 @@ export const getTasks = () => {
   const [listTasks, setTasks] = useState(null);
   
   async function loadTask() {
+    const user = await getUserData();
     const res = await fetch(API + `/${user.id}`);
     const data = await res.json();
     setTasks(data);
@@ -111,6 +112,7 @@ export const getSharedTask = (id) => {
 
 //Add a new Task
 export const AddTask = async (listTasks, setTasks, taskName) => {
+  const user = await getUserData();
   const response = await fetch(API, {
     headers: {
       "Content-Type": "application/json"
@@ -152,7 +154,7 @@ export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) 
 }
 
 //Login 
-export const login = async (email, password, setError, navigation) => {
+export const login = async (email, password, setError, navigation, resetForm) => {
   try {
     const response = await fetch(API + '/login', {
       method: 'POST',
@@ -175,7 +177,7 @@ export const login = async (email, password, setError, navigation) => {
     }
     
     await AsyncStorage.setItem('userData', JSON.stringify(data))
-    await setUserData();
+    resetForm({})
     navigation.navigate('TodoList')
   } catch (err) {
     console.log(err.message);
