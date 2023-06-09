@@ -131,7 +131,7 @@ export const AddTask = async (listTasks, setTasks, taskName) => {
 //Update a task
 export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) => {
 
-  const response = fetch(API + `/edit/${idTask}`, {
+  const response = await fetch(API + `/edit/${idTask}`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -142,8 +142,6 @@ export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) 
     })
   });
 
-  console.log(typeof (status));
-
   setTasks(
     listTasks.map((task) =>
       task.id === idTask
@@ -151,6 +149,23 @@ export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) 
         : task
     )
   );
+}
+
+export const updateUser = async (id, name, setUser, setUserHeading) => {
+  const response = await fetch(API + `/users/${id}`, {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      name: name,
+    })
+  });
+  const userData = await getUserData();
+  userData.name = name;
+  await AsyncStorage.setItem('userData', JSON.stringify(userData));
+  setUser(userData);
+  setUserHeading(userData);
 }
 
 //Login 

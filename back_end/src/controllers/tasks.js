@@ -21,6 +21,14 @@ export default {
     }
   },
 
+  updateUser: async (req, res) => {
+    const { name } = req.body;
+    console.log(name);
+    const id = req.params.id;
+    const [user] = await tasks.updateUser(connection, name, id);
+    res.status(200).send(user);
+  },
+
   getTasks: async (req, res) => {
     const id = req.params.id
     const [rows] = await tasks.getTasksById(connection, id);

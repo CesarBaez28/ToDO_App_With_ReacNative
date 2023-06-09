@@ -40,7 +40,7 @@ export default function Heading({ navigation }) {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.profile}
-          onPress={() => navigation.navigate('ModalPerfil')}
+          onPress={() => navigation.navigate('ModalPerfil', {setUser})}
         >
           <StyledText aling={'center'}>{initials}</StyledText>
         </TouchableOpacity>

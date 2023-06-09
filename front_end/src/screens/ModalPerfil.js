@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Button, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
 import StyledText from "../components/StyledText";
 import StyleTextInput from "../components/StyledTextInput";
 import theme from "../theme";
 import { getUserDataForComponents, getInitials, logout } from "../asyncStorage";
+import { updateUser } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,9 +49,22 @@ const styles = StyleSheet.create({
   }
 })
 
-export default function ModalPerfil({ navigation }) {
+export default function ModalPerfil({ navigation, route}) {
 
   const [user, setUser] = getUserDataForComponents();
+  const [inputValue, setInputValue] = useState('');
+  const setUserHeading = route.params.setUser;
+
+  const handleInputChange = (text) => {
+    setInputValue(text);
+  };
+
+  const handleOnSubmitEditing = () => {
+    if (inputValue != '') {
+      updateUser(user.id, inputValue, setUser, setUserHeading);
+    }
+    setInputValue('');    
+  };
 
   if (user) {
 
@@ -72,7 +86,12 @@ export default function ModalPerfil({ navigation }) {
 
         <View style={styles.inputContainer}>
           <StyledText fontSize={'subheading'}>Nombre</StyledText>
-          <StyleTextInput placeholder={user.name} style={styles.input} />
+          <StyleTextInput 
+            value={inputValue}
+            onChangeText={handleInputChange}
+            onSubmitEditing={handleOnSubmitEditing}
+            placeholder={user.name} style={styles.input} 
+          />
         </View>
 
         <TouchableOpacity onPress={()=> logout(navigation) } style={styles.inputLogout}>

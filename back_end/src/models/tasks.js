@@ -6,6 +6,12 @@ export default {
     )
   },
 
+  updateUser: function (conexion, name, id) {
+    return conexion.query (
+      `UPDATE users SET name = '${name}' WHERE id = ?`, [id]
+    )
+  },
+
   getTasksById: function (conexion, id) {
     return conexion.query(
       `SELECT tasks.*, shared_tasks.id_shared_with FROM 
