@@ -49,6 +49,7 @@ export default function ModalShareTask({idUser, idTask, nameTask, closeModal}) {
   return (
     <Formik validationSchema={shareTaskValidationSchema} initialValues={initialValue}
       onSubmit={(values, {resetForm}) => shareTask(idUser, idTask, nameTask, values.email, resetForm, closeModal)}
+      
     >
       {({handleSubmit}) => {
         return (

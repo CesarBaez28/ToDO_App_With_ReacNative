@@ -1,5 +1,11 @@
 export default {
 
+  login: function (conexion, email) {
+    return conexion.query(
+      `SELECT id, name, email, password FROM users WHERE email = ?`, [email]
+    )
+  },
+
   getTasksById: function (conexion, id) {
     return conexion.query(
       `SELECT tasks.*, shared_tasks.id_shared_with FROM 

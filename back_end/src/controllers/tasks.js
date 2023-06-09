@@ -2,6 +2,25 @@ import { connection }  from "../database";
 import tasks from "../models/tasks";
 
 export default {
+  
+  login: async (req, res) => {
+    const {email, password} = req.body
+    console.log(email);
+    const [row] = await tasks.login(connection, email);
+    console.log(row);
+    if (row.length > 0) {
+      if (row[0].password === password) {
+        const user = row[0];
+        res.status(200).send(user);
+      } else {
+        res.status(401).send(['Contraseña incorrecta']);
+      }
+    }
+    else {
+      res.status(404).send(['Usuario no encontrado']);
+    }
+  },
+
   getTasks: async (req, res) => {
     const id = req.params.id
     const [rows] = await tasks.getTasksById(connection, id);

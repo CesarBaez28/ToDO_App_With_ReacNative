@@ -10,6 +10,7 @@ import ModalShareTask from "./ModalShareTask";
 import ModalTaskShared from "./ModalTaskShared";
 import CheckMark from "./CheckMark";
 import { deleteTask } from "../api";
+import { user } from "../asyncStorage";
 
 import 'react-native-gesture-handler'
 import { BottomSheetModal } from '@gorhom/bottom-sheet'
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8
   }
 })
+
 
 export default function Tasks({ tasks, setTasks }) {
 
@@ -155,7 +157,7 @@ export default function Tasks({ tasks, setTasks }) {
           >
             <ModalShareTask
               closeModal={handleClosePresentShared}
-              idUser={1}
+              idUser={user.id}
               idTask={selectedTaskId}
               nameTask={selectedTaskName}
             />

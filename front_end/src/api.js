@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
+import { setUserData, user } from "./asyncStorage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = "https://0f47-206-85-14-11.ngrok.io/tasks";
+const API = "https://f567-206-85-14-11.ngrok.io/tasks";
 
 //Get task from the api
-export const getTasks = (id) => {
+export const getTasks = () => {
 
   const [listTasks, setTasks] = useState(null);
-
+  
   async function loadTask() {
-    const res = await fetch(API + `/${id}`);
+    const res = await fetch(API + `/${user.id}`);
     const data = await res.json();
     setTasks(data);
   }
@@ -102,8 +104,6 @@ export const getSharedTask = (id) => {
     const { author, shared_with } = await response.json()
     setAuthor(author[0].name)
     setSharedWith(shared_with[0].name)
-    console.log(author);
-    console.log(shared_with);
   }
 
   return [author, sharedWith]
@@ -117,7 +117,7 @@ export const AddTask = async (listTasks, setTasks, taskName) => {
     },
     method: "POST",
     body: JSON.stringify({
-      id_user: 1,
+      id_user: user.id,
       title: taskName
     })
   });
@@ -128,7 +128,7 @@ export const AddTask = async (listTasks, setTasks, taskName) => {
 
 //Update a task
 export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) => {
-  
+
   const response = fetch(API + `/edit/${idTask}`, {
     headers: {
       "Content-Type": "application/json"
@@ -136,17 +136,48 @@ export const updateTask = async (idTask, nameTask, status, listTasks, setTasks) 
     method: "PUT",
     body: JSON.stringify({
       newName: nameTask,
-      status: status 
+      status: status
     })
   });
 
-  console.log(typeof(status));
+  console.log(typeof (status));
 
   setTasks(
     listTasks.map((task) =>
       task.id === idTask
-        ? { ...task, name: nameTask, completed: status}
+        ? { ...task, name: nameTask, completed: status }
         : task
     )
   );
+}
+
+//Login 
+export const login = async (email, password, setError, navigation) => {
+  try {
+    const response = await fetch(API + '/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (data[0] === 'Usuario no encontrado') {
+      setError({email: "Usuario no encontrado"});
+      return
+    }
+
+    if (data[0] === 'Contraseña incorrecta') {
+      setError({password: "Contraseña incorrecta. Intente de nuevo"});
+      return
+    }
+    
+    await AsyncStorage.setItem('userData', JSON.stringify(data))
+    await setUserData();
+    navigation.navigate('TodoList')
+  } catch (err) {
+    console.log(err.message);
+  }
 }

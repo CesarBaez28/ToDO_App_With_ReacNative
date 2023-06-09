@@ -1,13 +1,13 @@
-import react from "react";
+import react, { useState } from "react";
 import { Formik } from "formik";
-import {View, StyleSheet } from "react-native";
+import {View, StyleSheet , Text} from "react-native";
 import StyledText from "../components/StyledText";
 import FormikInputValue from "../components/FormikInputValue";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { loginValidationSchema } from "../ValidationsSchemas/login"
+import { loginValidationSchema } from "../ValidationsSchemas/login";
 import theme from "../theme";
-import { LinearGradient } from 'expo-linear-gradient';
 import GradiantBackground from "../components/GradientBackground";
+import { login } from "../api";
 
 const initialValues = {
   email: "",
@@ -28,12 +28,18 @@ const styles = StyleSheet.create({
 })
 
 export default function LoginScreen({navigation}) {
+  
+  const handleLogin = (values, setErrors) => {
+    const {email, password} = values
+    login(email, password, setErrors, navigation);
+  }
+
   return <>
     <GradiantBackground>
       <Formik validationSchema={loginValidationSchema} initialValues={initialValues}
-        onSubmit={values => navigation.navigate('TodoList')}>
+        onSubmit={ (values, errors) => handleLogin(values, errors.setErrors)}>
 
-        {({ handleSubmit }) => {
+        {({ handleSubmit}) => {
           return (
             <View style={styles.form}>
 

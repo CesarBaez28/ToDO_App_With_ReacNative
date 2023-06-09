@@ -4,7 +4,7 @@ import InputAddTask from "../components/InputAddTask";
 import GradiantBackground from "../components/GradientBackground";
 import Heading from "../components/Heading";
 import Tasks from "../components/Tasks";
-import {BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { getTasks } from '../api';
 
 const styles = StyleSheet.create({
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
 })
 
 export default function TodoList({ navigation }) {
-
-  const [listTasks, setTasks] = getTasks(1);
+  
+  const [listTasks, setTasks] = getTasks();
 
   return (
     <GradiantBackground>
@@ -44,14 +44,14 @@ export default function TodoList({ navigation }) {
             fontSize={'heading2'}
           >Lista de tareas</StyledText>
 
-          <Tasks tasks={listTasks} setTasks={setTasks}/>
+          <Tasks tasks={listTasks} setTasks={setTasks} />
 
-          <InputAddTask 
-          listTasks={listTasks}
-          setTasks={setTasks}
-          color={'white'}
+          <InputAddTask
+            listTasks={listTasks}
+            setTasks={setTasks}
+            color={'white'}
           />
-          
+
         </SafeAreaView>
       </BottomSheetModalProvider>
     </GradiantBackground>
