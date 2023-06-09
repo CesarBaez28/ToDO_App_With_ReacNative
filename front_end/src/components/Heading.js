@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import StyledText from "./StyledText";
 import theme from "../theme";
 import { Entypo } from '@expo/vector-icons';
+import { user } from "../asyncStorage";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +28,19 @@ const styles = StyleSheet.create({
   }
 })
 
+const getInitials = () => {
+  let initials = user.name[0];
+  for (let index = 1; index < user.name.length; index++) {
+    if (user.name[index] === ' ') {
+      initials += user.name[index+1];
+      break;
+    }
+  }
+  return initials;
+}
+
+const initials = getInitials();
+
 export default function Heading({navigation}) {
   return (
     <View style={styles.container}>
@@ -34,9 +48,9 @@ export default function Heading({navigation}) {
       style={styles.profile}
       onPress={()=> navigation.navigate('ModalPerfil')}
       >
-        <StyledText aling={'center'}>CB</StyledText>
+        <StyledText aling={'center'}>{initials}</StyledText>
       </TouchableOpacity>
-      <StyledText fontSize={'subheading'} style={styles.text} color={'white'} fontWeight={'bold'}>César Báez</StyledText>
+      <StyledText fontSize={'subheading'} style={styles.text} color={'white'} fontWeight={'bold'}>{user.name}</StyledText>
       <TouchableOpacity style={styles.options}>
         <Entypo name="dots-three-horizontal" size={18} color="white" />
       </TouchableOpacity>

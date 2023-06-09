@@ -3,7 +3,7 @@ import { Alert, Keyboard } from "react-native";
 import { setUserData, user } from "./asyncStorage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = "https://f567-206-85-14-11.ngrok.io/tasks";
+const API = "https://24f7-206-85-14-1.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = () => {
