@@ -161,6 +161,7 @@ export default function Tasks({ tasks, setTasks }) {
                 idUser={user.id}
                 idTask={selectedTaskId}
                 nameTask={selectedTaskName}
+                setTasks={setTasks}
               />
             </BottomSheetModal>
 

@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ModalPerfil from '../screens/ModalPerfil';
 import StyledLink from './StyledLink';
+import CreateAccount from '../screens/CreateAccount';
+import theme from '../theme';
 
 const RootStack = createStackNavigator();
 
@@ -14,6 +16,16 @@ const Main = () => {
         <RootStack.Group>
           <RootStack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen} />
           <RootStack.Screen name="TodoList" options={{ headerShown: false }} component={TodoList} />
+          <RootStack.Screen name="CreateAccount" 
+          options = {{ 
+            headerBackTitle: false, 
+            title: 'Crear cuenta de usuario', 
+            headerTintColor: theme.colors.textsecundary,
+            headerStyle: {backgroundColor: theme.colors.primary}
+        
+          }} 
+          component={CreateAccount} 
+          />
         </RootStack.Group>
         <RootStack.Group screenOptions={{ presentation: 'modal' }}>
           <RootStack.Screen

@@ -3,7 +3,7 @@ import { Alert, Keyboard } from "react-native";
 import { getUserData } from "./asyncStorage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = "https://abf2-206-85-14-11.ngrok.io/tasks";
+const API = "https://5e54-190-80-164-129.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = () => {
@@ -62,7 +62,7 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 }
 
 //Share task 
-export const shareTask = async (idUser, idTask, nameTask, email, resetForm, closeModal) => {
+export const shareTask = async (idUser, idTask, nameTask, email, setTasks, resetForm, closeModal) => {
   const response = await fetch(API + "/shared_tasks", {
     headers: {
       "Content-Type": "application/json"

@@ -8,6 +8,7 @@ import { loginValidationSchema } from "../ValidationsSchemas/login";
 import theme from "../theme";
 import GradiantBackground from "../components/GradientBackground";
 import { login } from "../api";
+import StyledLink from "../components/StyledLink";
 
 const initialValues = {
   email: "",
@@ -62,9 +63,11 @@ export default function LoginScreen({navigation}) {
                 secureTextEntry
               />
 
-              <StyledText aling='center' color='secondary'>
-                Forgot your password?
-              </StyledText>
+              {/*
+                <StyledText aling='center' color='secondary'>
+                  Forgot your password?
+                </StyledText>
+              */}
 
               <View style={{marginTop: 40}}>
                 <ButtonPrimary onPress={handleSubmit} aling='center' margin='horizontal'>
@@ -73,9 +76,13 @@ export default function LoginScreen({navigation}) {
               </View>
 
               <View style={{marginTop: 20}}>
-                <StyledText aling='center' color='secondary'>
-                  Don't have an acount?
-                </StyledText>
+                <StyledLink 
+                  to={'/CreateAccount'}
+                  color={'white'}
+                  aling={'center'}
+                >
+                  Don't have an account?
+                </StyledLink>
               </View>
 
             </View>
