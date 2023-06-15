@@ -3,7 +3,7 @@ import { Alert, Keyboard } from "react-native";
 import { getUserData } from "./asyncStorage";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API = "https://5e54-190-80-164-129.ngrok.io/tasks";
+const API = "https://7b89-181-37-218-22.ngrok.io/tasks";
 
 //Get task from the api
 export const getTasks = () => {
@@ -62,7 +62,7 @@ export const toggleTask = async (id, listTasks, setTasks, completed) => {
 }
 
 //Share task 
-export const shareTask = async (idUser, idTask, nameTask, email, setTasks, resetForm, closeModal) => {
+export const shareTask = async (idUser, idTask, nameTask, email, setTasks, tasks, resetForm, closeModal) => {
   const response = await fetch(API + "/shared_tasks", {
     headers: {
       "Content-Type": "application/json"
@@ -82,6 +82,15 @@ export const shareTask = async (idUser, idTask, nameTask, email, setTasks, reset
     "Felicidades",
     `Has compartido la tarea "${nameTask}" con ${email}`
   )
+  
+  setTasks(
+    tasks.map((task) =>
+      task.id === idTask
+        ? { ...task, id_shared_with: data.userToShare[0].id}
+        : task
+    )
+  );
+
   resetForm({})
   closeModal()
 }
@@ -196,5 +205,25 @@ export const login = async (email, password, setError, navigation, resetForm) =>
     navigation.navigate('TodoList')
   } catch (err) {
     console.log(err.message);
+  }
+}
+
+export const createUser = async (name, email, password, navigation, resetForm) => {
+  try {
+    const response = await fetch(API + '/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name, email, password })
+    });
+
+    const data = await response.json();
+    const user = {id: data.insertId, name, email, password}
+    resetForm({})
+    await AsyncStorage.setItem('userData', JSON.stringify(user))
+    navigation.navigate('TodoList')
+  } catch (error) {
+    console.log(error.message);
   }
 }

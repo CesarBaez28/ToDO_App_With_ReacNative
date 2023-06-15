@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { createAccountValidationSchema } from "../ValidationsSchemas/createAccount";
 import FormikInputValue from "../components/FormikInputValue";
 import ButtonPrimary from "../components/ButtonPrimary";
+import { createUser } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,15 +36,16 @@ const initialValues = {
   password: ""
 }
 
-export default function CreateAccount({ }) {
+export default function CreateAccount({navigation}) {
 
-  const handleCreateAccount = (values) => {
-    console.log(values);
+  const handleCreateAccount = (values, resetForm) => {
+    const {name, email, password} = values;
+    createUser(name, email, password, navigation, resetForm);
   }
 
   return (
     <Formik validationSchema={createAccountValidationSchema} initialValues={initialValues}
-      onSubmit={values => handleCreateAccount(values)} >
+      onSubmit={(values, {resetForm}) => handleCreateAccount(values, resetForm)} >
 
       {({ handleSubmit }) => {
         return (

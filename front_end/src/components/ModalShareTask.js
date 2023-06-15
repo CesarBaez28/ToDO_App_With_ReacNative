@@ -45,10 +45,10 @@ const initialValue = {
   email: ""
 }
 
-export default function ModalShareTask({idUser, idTask, nameTask, setTasks, closeModal}) {
+export default function ModalShareTask({idUser, idTask, nameTask, setTasks, tasks, closeModal}) {
   return (
     <Formik validationSchema={shareTaskValidationSchema} initialValues={initialValue}
-      onSubmit={(values, {resetForm}) => shareTask(idUser, idTask, nameTask, values.email, resetForm, closeModal)}
+      onSubmit={(values, {resetForm}) => shareTask(idUser, idTask, nameTask, values.email, setTasks, tasks, resetForm, closeModal)}
     >
       {({handleSubmit}) => {
         return (

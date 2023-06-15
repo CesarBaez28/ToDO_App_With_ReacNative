@@ -4,7 +4,7 @@ import Main from "./src/components/Main";
 
 export default function App() {
   return <>
-    <StatusBar style='black' />
+    <StatusBar style='white' />
     <Main />
   </>
 }

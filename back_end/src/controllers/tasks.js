@@ -21,6 +21,12 @@ export default {
     }
   },
 
+  createUser: async (req, res) => {
+    const { name, email, password } = req.body;
+    const [user] = await tasks.createUser(connection, name, email, password);
+    res.status(201).send(user);
+  },
+
   updateUser: async (req, res) => {
     const { name } = req.body;
     console.log(name);
@@ -73,7 +79,7 @@ export default {
     const { id_task, id_user, email } = req.body;
     const [userToShare] = await tasks.getUserByEmail(connection, email);
     const [sharedTodo] = await tasks.shareTask(connection, id_task, id_user, userToShare[0].id);
-    res.status(201).send(sharedTodo);
+    res.status(201).send({sharedTodo, userToShare});
   },
 
   createTask: async(req, res) => {

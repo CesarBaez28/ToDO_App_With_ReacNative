@@ -6,6 +6,12 @@ export default {
     )
   },
 
+  createUser: function (conexion, name, email, password) {
+    return conexion.query(
+      `INSERT INTO users (name, email, password) VALUES (?,?,?)`, [name, email, password]
+    )
+  },
+
   updateUser: function (conexion, name, id) {
     return conexion.query (
       `UPDATE users SET name = '${name}' WHERE id = ?`, [id]
