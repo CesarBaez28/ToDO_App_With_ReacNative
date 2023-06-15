@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const createAccountValidationSchema = yup.object().shape({
   name: yup
     .string()
-    .matches(/^[a-zA-Z\s]+$/, 'No se permiten números')
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, 'No se permiten números')
     .required('El nombre es obligatorio'),
   email: yup
     .string()
